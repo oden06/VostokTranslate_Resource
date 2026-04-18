@@ -1,0 +1,19 @@
+name: Validate Translations
+
+on:
+  pull_request:
+    paths:
+      - 'supplemental/*.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate JSON format
+        run: |
+          for file in supplemental/*.json; do
+            echo "Checking $file"
+            cat $file | jq . > /dev/null
+          done
